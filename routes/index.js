@@ -79,4 +79,13 @@ router.get("/product/:id", function(req, res){
   });
 });
 
+router.get("/signin", function(req, res){
+  res.render("signin.ejs");
+
+});
+
+router.get("/register", function(req, res){
+  res.render("register.ejs");
+
+});
 module.exports = router;
