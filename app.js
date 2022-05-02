@@ -6,14 +6,15 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
+const flash = require("connect-flash");
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const findOrCreate = require('mongoose-findorcreate');
 
-//Require routes
-var index = require('./routes/index');
-var product = require('./routes/product');
-var category = require('./routes/category');
+// //Require routes
+// var index = require('./routes/index');
+// var product = require('./routes/product');
+// var category = require('./routes/category');
 
 const app = express();
 
@@ -21,10 +22,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
-//Set up routes
-app.use("/", index);
-app.use("/", product);
-app.use("/", category);
+// //Set up routes
+// app.use("/", index);
+// app.use("/", product);
+// app.use("/", category);
 
 app.use(session({
   secret: process.env.SECRET,
@@ -32,6 +33,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -86,8 +88,8 @@ app.post("/register", function(req, res){
     res.redirect("/register");
   } else {
     passport.authenticate("local")(req, res, function(){
-      console.log("signed in");
-      res.send("You are registered");
+      console.log("User is registered Successfully");
+      res.redirect("/");
     });
   }
 });
@@ -106,13 +108,24 @@ app.post("/signin", function(req, res){
       console.log(err);
     } else {
       passport.authenticate("local")(req, res, function(){
-        res.send("You are signed in")
-        // res.redirect("/");
+        console.log("Logged in Successfully")
+        res.redirect("/");
+
       });
     }
   });
 
 });
+
+//Require routes
+var index = require('./routes/index');
+var product = require('./routes/product');
+var category = require('./routes/category');
+
+//Set up routes
+app.use("/", index);
+app.use("/", product);
+app.use("/", category);
 
 let port = process.env.PORT;
 if (port == null || port == "") {

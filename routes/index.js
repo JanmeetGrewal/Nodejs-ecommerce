@@ -10,6 +10,7 @@ const _ = require("lodash");
 
 var Product=require("../models/products");
 var CarouselElement=require("../models/carouselElements");
+var Cart = require("../models/cart")
 
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(express.static("public"));
@@ -88,4 +89,60 @@ router.get("/register", function(req, res){
   res.render("register.ejs");
 
 });
+
+// Add to cart
+router.get("/add-to-cart/:id", async function(req, res){
+
+  let userCart;
+  if (req.user) {
+    userCart = await Cart.findOne({user: req.user._id});
+  }
+  let cart;
+  if (
+      (req.user && !userCart && req.session.cart) ||
+      (!req.user && req.session.cart)
+    ) {
+      cart = new Cart(req.session.cart);
+    } else if (!req.user || !userCart) {
+      cart = new Cart({});
+    } else {
+      cart = userCart;
+    }
+
+    const productId = req.params.id;
+
+    const product = await Product.findById(productId);
+    const itemIndex = cart.items.findIndex(function (item){
+      return item.productId == productId;
+    });
+
+    if (itemIndex > -1) {
+      cart.items[itemIndex].quantity++;
+      cart.items[itemIndex].price = cart.items[itemIndex].qty * product.price;
+      cart.totalQty++;
+      cart.totalCost += product.price;
+    }
+    else {
+      cart.items.push({
+        productId: productId,
+        quantity: 1,
+        price: product.price,
+        name: product.name,
+        productCode: product.productCode,
+      });
+      cart.totalQuantity++;
+      cart.totalCost += product.price;
+    }
+
+    if (req.user) {
+      cart.user = req.user._id;
+      cart.save();
+    }
+
+    req.session.cart = cart;
+    res.redirect(req.headers.referer);
+
+
+});
+
 module.exports = router;

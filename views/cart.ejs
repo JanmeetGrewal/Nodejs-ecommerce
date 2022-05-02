@@ -1,0 +1,43 @@
+<%- include("partials/header") -%>
+
+<!-- <link rel="stylesheet" href="/css/styles.css">
+<title>ECommerce</title>
+</head>
+
+<body> -->
+
+<div class="header">
+
+  <%- include("partials/navbar") -%>
+
+</div>
+
+  <div class="container">
+    <div class="row">
+
+      <% for(var i=0; i<products.length; i++) { %>
+
+      <div class="col-lg-3 col-sm-6 mb-3">
+        <div class="card bg-light" style="height:30rem">
+          <% var product=products[i]%>
+          <img src="<%= product.imagePath%>" class="img-thumbnail mx-auto" style="height:15rem">
+          <div class="card-body">
+            <h6 class="text-center"><a href="/product/<%=product._id%>"><%= product.name%></a></h6>
+            <p class="text-center">$<%= product.price%></p>
+            <div class="mx-auto">
+              <a href="" class="btn btn-outline-dark btn-block">Remove from Cart</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <%  } %>
+
+
+      <!-- Force next columns to break to new line -->
+
+    </div>
+  </div>
+
+  <%- include("partials/footer") -%>
