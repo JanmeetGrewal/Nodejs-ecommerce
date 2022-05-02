@@ -15,15 +15,15 @@
   <div class="container">
     <div class="row">
 
-      <% for(var i=0; i<products.length; i++) { %>
+      <% for(var i=0; i<items.length; i++) { %>
 
       <div class="col-lg-3 col-sm-6 mb-3">
         <div class="card bg-light" style="height:30rem">
-          <% var product=products[i]%>
-          <img src="<%= product.imagePath%>" class="img-thumbnail mx-auto" style="height:15rem">
+          <% var item=items[i]%>
+
           <div class="card-body">
-            <h6 class="text-center"><a href="/product/<%=product._id%>"><%= product.name%></a></h6>
-            <p class="text-center">$<%= product.price%></p>
+            <h6 class="text-center"><a href=""><%= item.name%></a></h6>
+            <p class="text-center">$<%= item.price%></p>
             <div class="mx-auto">
               <a href="" class="btn btn-outline-dark btn-block">Remove from Cart</a>
             </div>

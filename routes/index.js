@@ -145,4 +145,30 @@ router.get("/add-to-cart/:id", async function(req, res){
 
 });
 
+//Set up cart
+router.get("/cart", async function (req, res){
+  let userCart;
+
+//If user is signed in
+  if (req.user){
+    userCart = await Cart.findOne({user: req.user._id})
+  }
+
+  if (req.user && userCart) {
+    return res.render("cart.ejs", {items: userCart.items})
+  }
+
+//If user is not signed in but there is a cart in session
+  let cart;
+
+  if (req.session.cart) {
+    cart = new Cart(req.session.cart);
+    return res.render("cart.ejs", {items: cart.items})
+  }
+
+  else {
+    return res.send("Your cart is empty")
+  }
+});
+
 module.exports = router;
