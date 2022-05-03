@@ -23,21 +23,29 @@
 
           <div class="card-body">
             <h6 class="text-center"><a href=""><%= item.name%></a></h6>
-            <p class="text-center">$<%= item.price%></p>
+            <p class="text-center"><%= item.quantity%></p>
             <div class="mx-auto">
-              <a href="" class="btn btn-outline-dark btn-block">Remove from Cart</a>
+              <a href="/cart/<%=item.productId%>" class="btn btn-outline-dark btn-block">Remove from Cart</a>
             </div>
 
           </div>
         </div>
+
       </div>
 
+
+
       <%  } %>
+
+
 
 
       <!-- Force next columns to break to new line -->
 
     </div>
+
+    <p>Total Quantity: <%= totalQuantity %> </p>
+      <p>Total Cost: <%= totalCost %> </p>
   </div>
 
   <%- include("partials/footer") -%>

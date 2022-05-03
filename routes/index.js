@@ -119,7 +119,7 @@ router.get("/add-to-cart/:id", async function(req, res){
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity++;
       cart.items[itemIndex].price = cart.items[itemIndex].qty * product.price;
-      cart.totalQty++;
+      cart.totalQuantity++;
       cart.totalCost += product.price;
     }
     else {
@@ -163,12 +163,66 @@ router.get("/cart", async function (req, res){
 
   if (req.session.cart) {
     cart = new Cart(req.session.cart);
-    return res.render("cart.ejs", {items: cart.items})
+    return res.render("cart.ejs", {items: cart.items, totalQuantity: cart.totalQuantity, totalCost: cart.totalCost})
   }
 
   else {
     return res.send("Your cart is empty")
   }
+});
+
+// Remove an item from cartSchema
+router.get("/cart/:id", async function (req, res){
+    const productId = req.params.id;
+  let cart;
+  if (req.user) {
+    cart = await Cart.findOne({user: req.user._id});
+  }
+  else if (req.session.cart) {
+    cart = await new Cart(req.session.cart);
+
+  }
+
+  console.log(cart);
+
+
+
+
+  let itemIndex = cart.items.findIndex(function (item){
+    return item.productId == productId;
+  });
+  console.log(itemIndex);
+
+  if (itemIndex > -1) {
+
+
+      const product = await Product.findById(productId);
+
+    cart.items[itemIndex].quantity--;
+    cart.items[itemIndex].price -= product.price;
+    cart.totalQuantity--;
+    cart.totalCost -= product.price;
+
+    if (cart.items[itemIndex].quantity <= 0) {
+      await cart.items.remove({_id: cart.items[itemIndex]._id});
+    }
+    req.session.cart = cart;
+
+
+    if (req.user) {
+      await cart.save()
+    }
+
+    if (cart.totalQuantity <= 0) {
+      req.session.cart = null;
+      await Cart.findByIdAndRemove(cart._id);
+    }
+  }
+  res.redirect(req.headers.referer);
+
+
+
+
 });
 
 module.exports = router;
