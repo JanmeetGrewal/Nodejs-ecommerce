@@ -11,6 +11,7 @@ const _ = require("lodash");
 var Product=require("../models/products");
 var CarouselElement=require("../models/carouselElements");
 var Cart = require("../models/cart")
+const Order = require("../models/order");
 
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(express.static("public"));
@@ -186,8 +187,6 @@ router.get("/cart/:id", async function (req, res){
   console.log(cart);
 
 
-
-
   let itemIndex = cart.items.findIndex(function (item){
     return item.productId == productId;
   });
@@ -224,5 +223,13 @@ router.get("/cart/:id", async function (req, res){
 
 
 });
+
+//Checkout page
+
+router.get("/checkout", function(req, res){
+  res.render("checkout.ejs");
+});
+
+
 
 module.exports = router;
