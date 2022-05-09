@@ -18,6 +18,7 @@ const cartSchema = new mongoose.Schema({
       name: {
         type: String,
       },
+      imagePath:String,
       productCode: String
 
     }

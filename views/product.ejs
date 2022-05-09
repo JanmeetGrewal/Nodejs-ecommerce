@@ -8,16 +8,25 @@
 
   <%- include("partials/navbar") -%>
 
-  <div class="productDescription">
 
-  <img src="<%= image %>" class= "product-image float-left" alt="">
 
-    <div class="product-text ">
+  <div class="container">
+<div class="row productDescription">
+
+  <div class="col">
+  <img src="<%= image %>" class= "product-image" alt="">
+  </div>
+
+
+    <div class="col">
       <h1><%= name %></h1>
       <p><%= description %></p>
+        <p>$<%= price %></p>
+          <a href="/add-to-cart/<%= id %>" class="btn btn-outline-dark btn-block">Add to Cart</a>
     </div>
+      </div>
+</div>
 
-  </div>
 
 
   <%- include("partials/footer") -%>

@@ -18,9 +18,9 @@
       <% for(var i=0; i<items.length; i++) { %>
 
       <div class="col-lg-3 col-sm-6 mb-3">
-        <div class="card bg-light" style="height:30rem">
+        <div class="card bg-light" style="margin-top: 30px">
           <% var item=items[i]%>
-
+          <img src="<%= item.imagePath%>" class="img-thumbnail mx-auto" style="height:15rem">
           <div class="card-body">
             <h6 class="text-center"><a href=""><%= item.name%></a></h6>
             <p class="text-center"><%= item.quantity%></p>

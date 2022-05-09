@@ -76,7 +76,7 @@ router.get("/product/:id", function(req, res){
       console.log("Error connecting to db in the index.ejs");
     }
     else {
-        res.render("product.ejs", {image: product.imagePath, name: product.name, description: product.description});
+        res.render("product.ejs", {image: product.imagePath, name: product.name, description: product.description, price: product.price, id: product._id});
     }
   });
 });
@@ -129,6 +129,7 @@ router.get("/add-to-cart/:id", async function(req, res){
         quantity: 1,
         price: product.price,
         name: product.name,
+        imagePath: product.imagePath,
         productCode: product.productCode,
       });
       cart.totalQuantity++;
