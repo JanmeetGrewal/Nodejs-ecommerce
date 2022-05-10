@@ -1,5 +1,5 @@
-# e-commerce
-## An e-commerce Web Application using Node.js and MongoDB ##
+# Sway #
+## An e-commerce Web Application using Node.js and Mongoose ##
 
 **Home #1**
 
@@ -9,26 +9,18 @@
 
 ![Home #2](images/home2.png)
 
-**Home #3**
+**Product**
 
-![Home #3](images/home3.png)
+![Product Page](images/product.png)
 
-**Clothes**
+**Sign In**
 
-![Clothes](images/clothes.png)
+![Signin Page](images/signin.png)
 
-**Shoes**
+**Cart**
 
-![Shoes](images/shoes.png)
+![Cart Page](images/cart.png)
 
-**Product Detail**
 
-![Product Detail](images/productDetail.png)
 
-**Add Product**
 
-![Add Product](images/addProduct.png)
-
-**Added Product**
-
-![Added Product](images/addedProduct.png)
